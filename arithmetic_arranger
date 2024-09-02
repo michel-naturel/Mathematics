@@ -1,0 +1,101 @@
+# Code written by myself without hints from freeCodeCamp. It's a bit complicated as it had to meet certain rules while encountering an error
+# I'm still working on it
+
+def arithmetic_arranger(problems, show_answers=False):
+    operand1_str = ""
+    operand2_str = ""
+    dash_str = ""
+    result_str = ""
+    problem_count = 0
+    too_long_number = False
+    wrong_operator = False
+    no_digits = False
+
+# iterating on each problem
+    for problem in problems:
+        max_length = 0
+        problem_list = problem.split(" ")
+        
+ 
+    # checking for errors part 1
+        if problem_list[0].isnumeric() == False or problem_list[2].isnumeric() == False:
+            no_digits == True
+            print("Error: Numbers must only contain digits.")
+            break
+        
+        if problem_list[1] == '+':
+            operator = "addition"
+        elif problem_list[1] == '-':
+            operator = "substraction"
+        else:
+            wrong_operator == True
+            print("Error: Operator must be '+' or '-'.")
+            break
+
+        if len(problem_list[0]) > 4:
+            too_long_number = True
+            print("Error: Numbers cannot be more than four digits.")
+            break
+        if len(problem_list[2]) > 4:
+            too_long_number = True
+            print("Error: Numbers cannot be more than four digits.")
+            break
+            
+
+    # calculating the maximum length of an element
+        if len(problem_list[0]) > len(problem_list[2]):
+            max_length = len(problem_list[0])
+        elif len(problem_list[0]) < len(problem_list[2]):
+            max_length = len(problem_list[2])
+        elif len(problem_list[0]) == len(problem_list[2]):
+            max_length = len(problem_list[0])
+
+    # creating strings
+        if operator == "addition":
+            result = int(problem_list[0]) + int(problem_list[2])
+        if operator == "substraction":
+            result = int(problem_list[0]) - int(problem_list[2])
+        new_max_length = max_length + 2
+        spaces_operand1 = new_max_length - len(problem_list[0])
+        
+        if problem_count == len(problems)- 1:
+            operand1_str += spaces_operand1 * " " + problem_list[0]
+        else:
+            operand1_str += spaces_operand1 * " " + problem_list[0] + "    "
+        spaces_operand2 = new_max_length - len(problem_list[2]) - 1
+        
+        if problem_count == len(problems)- 1:
+            operand2_str += str(problem_list[1]) + spaces_operand2 * " " + str(problem_list[2])
+        else:    
+            operand2_str += str(problem_list[1]) + spaces_operand2 * " " + str(problem_list[2]) + "    "
+        
+        if problem_count == len(problems) - 1:
+            dash_str += str(new_max_length * "-")
+        else: 
+            dash_str += str(new_max_length * "-") + "    "
+        spaces_result = new_max_length - len(str(result))
+        
+        if problem_count == len(problems) - 1:
+           result_str += spaces_result * " " + str(result)
+        else: 
+            result_str += spaces_result * " " + str(result) + "    "
+    
+        problem_count += 1
+
+    if show_answers == False:
+            final_str = operand1_str + "\n" + operand2_str + "\n" + dash_str
+    elif show_answers == True:
+            final_str = operand1_str + "\n" + operand2_str + "\n" + dash_str + "\n" + result_str 
+
+
+    # checking for errors part 2
+    if problem_count > 5:
+        print("Error: Too many problems.")
+    elif too_long_number == False and no_digits == False and wrong_operator == False:
+        return print(final_str)
+
+
+
+# print(f'\n{arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"])}')
+
+arithmetic_arranger(["3801 - 2", "123 + 49"])
